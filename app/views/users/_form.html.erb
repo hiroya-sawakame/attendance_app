@@ -7,6 +7,9 @@
   <%= f.label :メールアドレス, class: "label-#{yield(:class_text)}" %>
   <%= f.email_field :email, class: "form-control" %>
 
+  <%= f.label :所属, class: "label-#{yield(:class_text)}" %>
+  <%= f.text_field :department, class: "form-control" %>
+
   <%= f.label :パスワード, class: "label-#{yield(:class_text)}" %>
   <%= f.password_field :password, class: "form-control" %>
 
