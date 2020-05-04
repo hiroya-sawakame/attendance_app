@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     end
     resources :attendances, only: :update
   end
+
+  get 'test', to: 'test#test'
 end
