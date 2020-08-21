@@ -29,12 +29,12 @@ class AttendancesController < ApplicationController
   
   def edit_one_month
   end
-  
+
   def create_overtime
     @user = User.find(params[:user_id])
     @attendance = Attendance.find(params[:id])
   end
-  
+
   def update_one_month
     ActiveRecord::Base.transaction do # トランザクションを開始します。
       attendances_params.each do |id, item|
