@@ -43,9 +43,6 @@
                 <% end %>
               </table>
 
-            <%#= f.label '残業時間' %>
-            <%#= f.text_field :department, class: "form-control" %>
-
             <div class="center">
               <%= f.submit '申請', class: "btn btn-primary btn-#{yield(:class_text)}" %>
               <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
