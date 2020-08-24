@@ -46,11 +46,11 @@
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
     <thead>
       <tr>
-        <th rowspan = "2">残業申請</th>
-        <th rowspan = "2">日付</th>
-        <th rowspan = "2">曜日</th>
-        <th colspan = "5">実績</th>
-        <th colspan = "4">所定外勤務</th>
+        <th rowspan="2">残業申請</th>
+        <th rowspan="2">日付</th>
+        <th rowspan="2">曜日</th>
+        <th colspan="5">実績</th>
+        <th colspan="4">所定外勤務</th>
       </tr>
       <tr>
         <th></th>
@@ -68,7 +68,7 @@
     <tbody>
     <% @attendances.each do |day| %>
       <tr>
-        <td><%= link_to "残業申請", create_overtime_user_path(@user), remote: true, class: "btn btn-success" %></td>
+        <td><%= link_to "残業申請", create_overtime_user_path(@user,day), remote: true, class: "btn btn-success" %></td>
         <td><%= l(day.worked_on, format: :short) %></td>
         <td>
           <% if $days_of_the_week[day.worked_on.wday] == "日" %>
