@@ -14,7 +14,6 @@
           <%= form_with(model: @user, url: update_basic_info_user_path(@user), local: true, method: :patch) do |f| %>
             <%= render 'shared/error_messages', object: @user %>
               <table class="table-bordered table-condensed table-striped">
-                <% @attendances.each do |day| %>
                 <tr>
                   <td>日付</td>
                   <td>曜日</td>
@@ -24,23 +23,23 @@
                   <td>指示者確認㊞</td>
                 </tr>
                 <tr>
-                  <td><%= l(day.worked_on, format: :short) %></td>
+                  <td><%= l(@day.worked_on, format: :short) %></td>
                   <td>
-                    <% if $days_of_the_week[day.worked_on.wday] == "日" %>
-                      <font color="red"><%= $days_of_the_week[day.worked_on.wday] + "(休)" %></font>
-                    <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
-                      <font color="blue"><%= $days_of_the_week[day.worked_on.wday] + "(休)" %></font>
+                    <% if $days_of_the_week[@day.worked_on.wday] == "日" %>
+                      <font color="red"><%= $days_of_the_week[@day.worked_on.wday] + "(休)" %></font>
+                    <% elsif $days_of_the_week[@day.worked_on.wday] == "土" %>
+                      <font color="blue"><%= $days_of_the_week[@day.worked_on.wday] + "(休)" %></font>
                     <% else %>
-                      <%= $days_of_the_week[day.worked_on.wday] %>
+                      <%= $days_of_the_week[@day.worked_on.wday] %>
                     <% end %>
                   </td>
                   <td>
-                    <%= f.text_field :department, class: "form-control" %>
+                    <%= f.time_field :overtime, class: "form-control" %>
                   </td>
                   <td></td>
                   <td></td>
+                  <td></td>
                 </tr>
-                <% end %>
               </table>
 
             <div class="center">
