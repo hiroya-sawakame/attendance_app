@@ -38,7 +38,7 @@
                   <td><%= f.text_field :content, class: "form-control" %></td>
 
 
-                  <td></td>
+                  <td><%= f.select :day_status, {'つとむ先輩': 1, 'きださん': 2}, { include_blank: '選択'}, class: "form-control" %></td>
 
 
                 </tr>
