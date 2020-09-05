@@ -100,7 +100,15 @@
           <%= (format_basic_info(day.overtime).to_d - format_basic_info(@user.work_end_time).to_d).to_f if day.overtime.present? %>
         </td>
         <td><%= day.content %></td>
-        <td></td>
+        <td>
+          <% if day.day_status == 0 %>
+            つとむ先輩
+            <span class="label label-warning">確認中</span>
+          <% elsif day.day_status == 1 %>
+            きだくん
+            <span class="label label-warning">確認中</span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
     </tbody>

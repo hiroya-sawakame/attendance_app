@@ -33,14 +33,10 @@
                       <%= $days_of_the_week[@day.worked_on.wday] %>
                     <% end %>
                   </td>
-                  <td><%= f.time_field :overtime, class: "form-control" %></td>
+                  <td><%= f.time_field :overtime, class: "form-control", required: true %></td>
                   <td></td>
-                  <td><%= f.text_field :content, class: "form-control" %></td>
-
-
-                  <td><%= f.select :day_status, {'つとむ先輩': 1, 'きださん': 2}, { include_blank: '選択'}, class: "form-control" %></td>
-
-
+                  <td><%= f.text_field :content, class: "form-control", required: true %></td>
+                  <td><%= f.select :day_status, {"つとむ先輩": 0, "きださん": 1}, { include_blank: '選択'}, class: "form-control", required: true %></td>
                 </tr>
               </table>
 

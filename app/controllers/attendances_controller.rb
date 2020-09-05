@@ -36,7 +36,7 @@ class AttendancesController < ApplicationController
 
   def create_overtime
     @attendance = Attendance.find_by(id: params[:format])
-    @attendance.update_attributes(overtime: params[:overtime], content: params[:content])
+    @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
 
     flash[:info] = '残業申請しました。'
     redirect_back(fallback_location: root_path)

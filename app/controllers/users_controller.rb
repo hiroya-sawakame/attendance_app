@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @day_status_a = Attendance.where(day_status: 0).order(overtime: "ASC")
   end
   
   def new
