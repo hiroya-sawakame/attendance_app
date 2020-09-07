@@ -27,9 +27,14 @@
 </div>
 
 <% if @user.id == 2 || @user.id == 3 %>
-  <%= "【 所属長承認申請のお知らせ 】" %><br>
-  <%= "【 残業申請のお知らせ 】" %><br>
-  <%= "【 残業申請のお知らせ 】" %>
+  <h5>【 所属長承認申請のお知らせ 】</h5>
+  <%# if @day_status_boss > 0 %>
+    <h5>【  残業申請のお知らせ 】</h5>
+    <%= link_to "#{@day_status_boss}件のお知らせがあります。", overtime_user_path(@user), remote: true, class: "btn btn-success" %>
+
+  <%# end %>
+  <h5>【  残業申請のお知らせ 】</h5>
+  <h5>【 勤怠変更申請のお知らせ 】</h5>
 <% end %>
 
 <div class="btn-users-show">
