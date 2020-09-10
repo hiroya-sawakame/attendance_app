@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'bases/new'
+
   root 'static_pages#top'
   get '/signup', to: 'users#new'
   
@@ -17,4 +19,6 @@ Rails.application.routes.draw do
     end
     resources :attendances, only: :update
   end
+
+  resources :bases, only: [:new, :update, :create, :destroy]
 end
