@@ -14,6 +14,7 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'pry-rails'
 gem 'carrierwave'
+# gem 'mini_magick'
 
 group :development, :test do
   gem 'sqlite3'

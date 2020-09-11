@@ -2,29 +2,30 @@
 <h1>拠点一覧</h1>
 <div class="table-responsive">
   <table class="table table-bordered table-condensed table-hover">
-    <thead>
+    <thead class="table_label">
     <tr>
+      <th class="text-center">拠点画像</th>
       <th class="text-center">拠点地番号</th>
       <th class="text-center">拠点地</th>
       <th class="text-center">拠点種類</th>
-      <th></th>
-      <th></th>
+      <th class="text-center">削除ボタン</th>
+      <th class="text-center">編集ボタン</th>
     </tr>
     </thead>
 
     <thead>
     <% @bases.each do |base| %>
       <tr>
-        <td><%= base.image %></td>
-        <td><%= base.number %></td>
-        <td><%= base.place %></td>
-        <td><%= base.type %></td>
-        <td>
+        <td class="text-center"><img src="<%="#{base.image}"%>"></td>
+        <td class="text-center"><%= base.number %></td>
+        <td class="text-center"><%= base.place %></td>
+        <td class="text-center"><%= base.type %></td>
+        <td class="text-center">
           <%= link_to "削除", basis_url(@base, id: base.id), method: :delete,
-                      data: { confirm: "削除してよろしいですか？" }, class: "btn btn-primary" %>
+                      data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
         </td>
-        <td>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#modal-base<%= base.id %>">編集</button>
+        <td class="text-center">
+          <button class="btn btn-success" data-toggle="modal" data-target="#modal-base<%= base.id %>">編集</button>
           <!-- 2.モーダルの配置 -->
           <div class="modal fade" id="modal-base<%= base.id %>" tabindex="-1">
             <div class="modal-dialog">
@@ -40,19 +41,7 @@
                 <!-- 5.モーダルのボディ -->
                 <div id="modle-base-id<%= @base.id %>">
                   <div class="modal-body">
-                    <%= form_with(model: @base, remote: true) do |f| %>
-
-                      <%= f.label :拠点地番号 %>
-                      <%= f.text_field :number, class: 'form-control' %>
-
-                      <%= f.label :拠点地 %>
-                      <%= f.text_field :place, class: 'form-control' %>
-
-                      <%= f.label :拠点種類 %>
-                      <%= f.text_field :type, class: 'form-control' %>
-
-                      <%= f.submit "更新", class: "btn btn-primary" %>
-                    <% end %>
+                    <%= render 'form' %>
                   </div>
                 </div>
               </div>
@@ -80,26 +69,9 @@
         </div>
         <!-- 5.モーダルのボディ -->
         <div class="modal-body">
-          <%= form_with(model: @base, remote: true) do |f| %>
-
-            <%= f.label :拠点番号 %>
-            <%= f.text_field :number, class: 'form-control' %>
-
-            <%= f.label :拠点名 %>
-            <%= f.text_field :place, class: 'form-control' %>
-
-            <%= f.label :拠点種類 %>
-            <%= f.text_field :type, class: 'form-control' %>
-
-            <%= f.submit "拠点情報の追加", class: "btn btn-primary" %>
-          <% end %>
-
+          <%= render 'form' %>
         </div>
       </div>
     </div>
   </div>
 </div>
-<%= form_for @base do |f| %>
-  <%= f.file_field :image %>
-  <%= f.submit 'アップロードする'%>
-<% end %>

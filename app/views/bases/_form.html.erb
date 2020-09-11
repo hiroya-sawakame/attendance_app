@@ -1,0 +1,16 @@
+<%= form_with(model: @base, remote: true) do |f| %>
+
+  <%= f.label "拠点番号" %>
+  <%= f.text_field :number, class: 'form-control', placeholder:"拠点番号を入力してください", required: "required" %>
+
+  <%= f.label "拠点名" %>
+  <%= f.text_field :place, class: 'form-control', placeholder:"拠点名を入力してください", required: "required" %>
+
+  <%= f.label "拠点種類" %>
+  <%= f.text_field :type, class: 'form-control', placeholder:"拠点種類を入力してください", required: "required" %>
+
+  <%= f.label "拠点画像" %>
+  <%= f.file_field :image, required: "required"  %>
+
+  <%= f.submit "確定", class: "btn btn-primary btn-block" %>
+<% end %>
