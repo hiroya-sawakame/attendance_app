@@ -1,0 +1,45 @@
+<% provide(:class_text, 'basic-info') %>
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title">【残業申請一覧】</h1>
+    </div>
+    <div class="modal-body">
+      <% @day_status_all.each do |day_status| %>
+<!--      <h3 class="text-center"><%#= day_status.name %>さんからの残業申請</h3>-->
+        <table class="table-bordered table-condensed table-striped" style="margin: auto">
+          <tr>
+            <td>日付</td> <!--rowspan:縦結合、colspan：横結合-->
+            <td>曜日</td>
+            <td>終了予定時間</td>
+            <td>指定勤務終了時間</td>
+            <td>時間外時間</td>
+            <td>業務処理内容</td>
+            <td>指示者確認㊞</td>
+            <td>変更</td>
+            <td>勤怠を確認する</td>
+          </tr>
+          <tr>
+            <td><%= l(day_status.worked_on, format: :short) %></td>
+            <td><%= render 'attendances/week_day', day: day_status %></td>
+            <td><%= l(day_status.overtime, format: :time) %></td>
+            <td><%= format_basic_info(@user.work_end_time) %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+        <% end %>
+        <div class="center_btn">
+          <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
+            キャンセル
+          </button>
+        </div>
+    </div>
+  </div>
+</div>

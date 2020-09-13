@@ -7,11 +7,9 @@
                                'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application',
                                'data-turbolinks-track': 'reload' %>
-    <!-- HTML shimがこの1行で収まる -->
     <%= render 'layouts/shim' %>
   </head>
   <body>
-    <!-- headerの内容がこの1行で収まる -->
     <%= render 'layouts/header' %>
     <div class="container">
       <% flash.each do |message_type, msg| %>

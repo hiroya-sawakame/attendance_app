@@ -1,5 +1,4 @@
 <% provide(:class_text, 'basic-info') %>
-<% provide(:button_text, '更新') %>
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
     <div class="modal-header">
@@ -22,15 +21,7 @@
                 </tr>
                 <tr>
                   <td><%= l(@day.worked_on, format: :short) %></td>
-                  <td>
-                    <% if $days_of_the_week[@day.worked_on.wday] == "日" %>
-                      <font color="red"><%= $days_of_the_week[@day.worked_on.wday] + "(休)" %></font>
-                    <% elsif $days_of_the_week[@day.worked_on.wday] == "土" %>
-                      <font color="blue"><%= $days_of_the_week[@day.worked_on.wday] + "(休)" %></font>
-                    <% else %>
-                      <%= $days_of_the_week[@day.worked_on.wday] %>
-                    <% end %>
-                  </td>
+                  <td><%= render 'attendances/week_day', day: @day %></td>
                   <td><%= f.time_field :overtime, class: "form-control", required: true %></td>
                   <td></td>
                   <td><%= f.text_field :content, class: "form-control", required: true %></td>

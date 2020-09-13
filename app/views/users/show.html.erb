@@ -29,7 +29,7 @@
 <% if @user.id == 2 %>
   <h5>【 所属長承認申請のお知らせ 】</h5>
   <% if @day_status_boss > 0 %>
-    <h5 class="font-red">【  残業申請のお知らせ 】<%= link_to "#{@day_status_boss}件の残業申請があります。", overtime_user_path(@user), remote: true, class: "font-red" %></h5>
+    <h5 class="font-red">【  残業申請のお知らせ 】<%= link_to "#{@day_status_boss}件の残業申請があります。", approval_overtime_user_path(@user), remote: true, class: "font-red" %></h5>
   <% else %>
     <h5>【  残業申請のお知らせ 】</h5>
   <% end %>
@@ -37,7 +37,7 @@
 <% elsif  @user.id == 3 %>
   <h5>【 所属長承認申請のお知らせ 】</h5>
   <% if @day_status_staff > 0 %>
-    <h5 class="font-red">【  残業申請のお知らせ 】<%= link_to "#{@day_status_staff}件の残業申請があります。", overtime_user_path(@user), remote: true, class: "font-red" %></h5>
+    <h5 class="font-red">【  残業申請のお知らせ 】<%= link_to "#{@day_status_staff}件の残業申請があります。", approval_overtime_user_path(@user), remote: true, class: "font-red" %></h5>
   <% else %>
     <h5>【  残業申請のお知らせ 】</h5>
   <% end %>
@@ -84,15 +84,7 @@
       <tr>
         <td><%= link_to "残業申請", overtime_user_path(@user,day), remote: true, class: "btn btn-success" %></td>
         <td><%= l(day.worked_on, format: :short) %></td>
-        <td>
-          <% if $days_of_the_week[day.worked_on.wday] == "日" %>
-            <font color="red"><%= $days_of_the_week[day.worked_on.wday] + "(休)" %></font>
-          <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
-            <font color="blue"><%= $days_of_the_week[day.worked_on.wday] + "(休)" %></font>
-          <% else %>
-            <%= $days_of_the_week[day.worked_on.wday] %>
-          <% end %>
-        </td>
+        <td><%= render 'attendances/week_day', day: day %></td>
         <td>
           <% if btn_text = attendance_state(day) %>
             <%= link_to "#{btn_text}登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
@@ -148,3 +140,4 @@
 </div>
 
 <div id="create_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
