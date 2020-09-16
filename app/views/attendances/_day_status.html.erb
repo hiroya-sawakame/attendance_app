@@ -1,0 +1,7 @@
+<% if day.day_status == 0 || day.day_status == 1 %>
+  <span class="label label-warning">承認待ち</span>
+<% elsif day.day_status == 2 %>
+  <span class="label label-success">承認済み</span>
+<% elsif day.day_status == 3 %>
+  <span class="label label-danger">否認</span>
+<% end %>
