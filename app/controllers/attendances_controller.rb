@@ -42,8 +42,6 @@ class AttendancesController < ApplicationController
   end
 
   def approval_overtime
-    # @day_status_boss = Attendance.find_by(day_status: 0)
-    # @day_status_staff = Attendance.find_by(day_status: 1)
     if params[:id] == "2"
       @day_status = Attendance.find_by(day_status: 0)
       @day_status_all = Attendance.where(day_status: 0)
@@ -56,28 +54,18 @@ class AttendancesController < ApplicationController
   end
 
   def approval_overtime_done
-    # @attendances = Attendance.where(day_status: [0, 1])
-    # @attendance.update_all(day_status: params[:day_status])
-    # binding.pry
-    #
-    # @attendances.each do |attendance|
-    #   unless item[:checkbox].nil? # チェックボックスにチェックがあるときにしか、updateしない
-    #     attendance = Attendance.find(id)
-    #     attendance.update_attributes(day_status: params[:day_status])
-    #   end
-    # end
-    # ActiveRecord::Base.transaction do # トランザクションを開始します。
-    #   attendances_day_status_params.each do |id, item|
-    #     attendance = Attendance.find(id)
-    #     attendance.update_attributes!(item)
-    #   end
-    # end
-    # flash[:info] = '申請内容を確認しました。'
-    # redirect_back(fallback_location: root_path)
-    #
-    # rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-    #   flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    #   redirect_to attendances_edit_one_month_user_url(date: params[:date])
+    ActiveRecord::Base.transaction do # トランザクションを開始します。
+      attendances_day_status_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+      end
+    end
+    flash[:info] = '申請内容を確認しました。'
+    redirect_back(fallback_location: root_path)
+
+    rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+      flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+      redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
 
   def update_one_month
@@ -102,7 +90,7 @@ class AttendancesController < ApplicationController
   end
 
   def attendances_day_status_params
-    params.permit(attendances: [:day_status])[:attendances]
+    params.require(:user).permit(attendances: [:day_status])[:attendances]
   end
   
   # 管理権限者、または現在ログインしているユーザーを許可します。

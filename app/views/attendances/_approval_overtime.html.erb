@@ -8,7 +8,7 @@
       <h1 class="modal-title">【残業申請一覧】</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @attendance, url: approval_overtime_user_path(@user), local: true, method: :patch) do |f| %>
+      <%= form_with(model: @user, url: approval_overtime_user_path, local: true, method: :patch) do |f| %>
       <% @day_status_all.each do |day_status| %>
       <h3 class="text-center">【<%= User.find(id=day_status.user_id).name %>さんからの残業申請】</h3>
         <table class="table-bordered table-condensed table-striped" style="margin: auto">
@@ -32,11 +32,13 @@
               <%= (format_basic_info(day_status.overtime).to_d - format_basic_info(@user.work_end_time).to_d).to_f if day_status.overtime.present? %>
             </td>
             <td><%= day_status.content %></td>
+            <%= f.fields_for "attendances[]", day_status do |attendance| %>
             <td>
-              <%= f.select :day_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+              <%= attendance.select :day_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
             </td>
-            <td><%= f.check_box :day_status, {class: "check_box"}, true, false %></td>
             <td></td>
+            <td></td>
+            <% end %>
           </tr>
         </table>
         <% end %>
