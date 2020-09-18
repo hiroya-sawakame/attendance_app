@@ -8,9 +8,9 @@
       <h1 class="modal-title">【残業申請一覧】</h1>
     </div>
     <div class="modal-body">
-      <%= form_with(model: @user, url: approval_overtime_user_path, local: true, method: :patch) do |f| %>
-      <% @day_status_all.each do |day_status| %>
-      <h3 class="text-center">【<%= User.find(id=day_status.user_id).name %>さんからの残業申請】</h3>
+      <%= form_with(url: approval_overtime_user_path, local: true, method: :patch) do |f| %>
+
+<!--      <h3 class="text-center">【<%#= User.find(id=day_status.user_id).name %>さんからの残業申請】</h3>-->
         <table class="table-bordered table-condensed table-striped" style="margin: auto">
           <tr>
             <td>日付</td> <!--rowspan:縦結合、colspan：横結合-->
@@ -23,13 +23,14 @@
             <td>変更</td>
             <td>勤怠を確認する</td>
           </tr>
+          <% @day_status_all.each do |day_status| %>
           <tr>
             <td><%= l(day_status.worked_on, format: :short) %></td>
             <td><%= render 'attendances/week_day', day: day_status %></td>
             <td><%= l(day_status.overtime, format: :time) if day_status.overtime.present? %></td>
-            <td><%= format_basic_info(@user.work_end_time) %></td>
+            <td><%= format_basic_info(User.find(id=day_status.user_id).work_end_time) %></td>
             <td>
-              <%= (format_basic_info(day_status.overtime).to_d - format_basic_info(@user.work_end_time).to_d).to_f if day_status.overtime.present? %>
+              <%= (format_basic_info(day_status.overtime).to_d - format_basic_info(User.find(id=day_status.user_id).work_end_time).to_d).to_f if day_status.overtime.present? %>
             </td>
             <td><%= day_status.content %></td>
             <%= f.fields_for "attendances[]", day_status do |attendance| %>
@@ -40,8 +41,8 @@
             <td></td>
             <% end %>
           </tr>
-        </table>
         <% end %>
+        </table>
           <div class="center_btn">
             <%= f.submit '変更を送信する', class: "btn btn-primary btn-#{yield(:class_text)}" %>
             <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">

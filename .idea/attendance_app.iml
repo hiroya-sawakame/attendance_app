@@ -175,43 +175,38 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="autoprefixer-rails (vbundled(9.8.6.3)) [path][gem]" type="rubylib">
+      <library name="autoprefixer-rails (vbundled(10.0.0.2)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/spec" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/vendor" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-10.0.0.2/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-10.0.0.2/vendor" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/spec" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/vendor" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-10.0.0.2/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-10.0.0.2/vendor" />
         </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/autoprefixer-rails-9.8.6.3/spec" />
-        </excluded>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="bcrypt (vbundled(3.1.15)) [path][gem]" type="rubylib">
+      <library name="bcrypt (vbundled(3.1.16)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/spec" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/spec" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.15/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/bcrypt-3.1.16/spec" />
         </excluded>
       </library>
     </orderEntry>
@@ -504,23 +499,23 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="jbuilder (vbundled(2.10.0)) [path][gem]" type="rubylib">
+      <library name="jbuilder (vbundled(2.10.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/test" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/gemfiles" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/test" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/gemfiles" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/test" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/gemfiles" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/test" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/gemfiles" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/test" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.0/gemfiles" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/test" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/jbuilder-2.10.1/gemfiles" />
         </excluded>
       </library>
     </orderEntry>
@@ -709,29 +704,32 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="nio4r (vbundled(2.5.2)) [path][gem]" type="rubylib">
+      <library name="nio4r (vbundled(2.5.4)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/spec" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/rakelib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/examples" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/.github" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/rakelib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/examples" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/lib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/spec" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/rakelib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/examples" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/.github" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/rakelib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/examples" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/ext" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/spec" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/rakelib" />
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.2/examples" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/ext" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/spec" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/.github" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/rakelib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/nio4r-2.5.4/examples" />
         </excluded>
       </library>
     </orderEntry>
@@ -1193,15 +1191,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="sprockets-rails (vbundled(3.2.1)) [path][gem]" type="rubylib">
+      <library name="sprockets-rails (vbundled(3.2.2)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/sprockets-rails-3.2.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/sprockets-rails-3.2.2/lib" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/sprockets-rails-3.2.1/lib" />
+          <root url="file://$MODULE_DIR$/vendor/cache/ruby/2.5.0/gems/sprockets-rails-3.2.2/lib" />
         </SOURCES>
       </library>
     </orderEntry>

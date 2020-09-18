@@ -43,13 +43,9 @@ class AttendancesController < ApplicationController
 
   def approval_overtime
     if params[:id] == "2"
-      @day_status = Attendance.find_by(day_status: 0)
       @day_status_all = Attendance.where(day_status: 0)
-      @user = @day_status.user
     elsif params[:id] == "3"
-      @day_status = Attendance.find_by(day_status: 1)
       @day_status_all = Attendance.where(day_status: 1)
-      @user = @day_status.user
     end
   end
 
@@ -78,7 +74,7 @@ class AttendancesController < ApplicationController
     flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
     redirect_to user_url(date: params[:date])
   rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
-    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました、下記の３点をご確認ください。<br>" + "①　出勤・退勤時間は両方入力されているか？<br>" + "②　出勤より退勤時間の方が早い時間ではないか？<br>" + "③　備考欄は50文字以内になっているか？"
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
@@ -90,7 +86,7 @@ class AttendancesController < ApplicationController
   end
 
   def attendances_day_status_params
-    params.require(:user).permit(attendances: [:day_status])[:attendances]
+    params.permit(attendances: [:day_status])[:attendances]
   end
   
   # 管理権限者、または現在ログインしているユーザーを許可します。
