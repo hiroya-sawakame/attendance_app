@@ -43,17 +43,29 @@ class AttendancesController < ApplicationController
 
   def approval_overtime
     if params[:id] == "2"
+      @users = User.joins(:attendances).where(attendances: { day_status: 0}).distinct
       @day_status_all = Attendance.where(day_status: 0)
+      # binding.pry
     elsif params[:id] == "3"
+      @users = User.joins(:attendances).where(attendances: { day_status: 1}).distinct
       @day_status_all = Attendance.where(day_status: 1)
     end
   end
 
   def approval_overtime_done
     ActiveRecord::Base.transaction do # トランザクションを開始します。
+
       attendances_day_status_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        p '--test--'
+        p params[:attendances]
+        p '--test_2--'
+        p params[:attendances][:id]
+        p '--test_3--'
+        # binding.pry
+        if params[:checkbox] == true
+          attendance = Attendance.find(id)
+          attendance.update_attributes!(item)
+        end
       end
     end
     flash[:info] = '申請内容を確認しました。'
@@ -86,7 +98,7 @@ class AttendancesController < ApplicationController
   end
 
   def attendances_day_status_params
-    params.permit(attendances: [:day_status])[:attendances]
+    params.permit(attendances: [:day_status, :checkbox])[:attendances]
   end
   
   # 管理権限者、または現在ログインしているユーザーを許可します。
