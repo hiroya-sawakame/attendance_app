@@ -101,7 +101,7 @@
         <td><%= day.note %></td>
         <td><%= l(day.overtime, format: :time) if day.overtime.present? %></td>
         <td>
-          <%= (format_basic_info(day.overtime).to_d - format_basic_info(@user.work_end_time).to_d).to_f if day.overtime.present? %>
+          <%= render 'time_calculation', day: day, user: @user %>
         </td>
         <td><%= day.content %></td>
         <td><%= render 'attendances/day_status', day: day %></td>

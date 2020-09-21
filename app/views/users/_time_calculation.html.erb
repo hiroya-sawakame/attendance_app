@@ -1,0 +1,9 @@
+<%#= format_basic_info(day.overtime) if day.overtime.present? && format_basic_info(day.overtime).to_f.between?(0.00, 6.00) %>
+<%#= format_basic_info(day.overtime) if day.overtime.present? && format_basic_info(day.overtime).to_f.between?(6.01, 23.59) %>
+<%= (format_basic_info(day.overtime).to_d - format_basic_info(user.work_end_time).to_d).to_f if day.overtime.present? && format_basic_info(day.overtime).to_f.between?(6.01, 23.59) %>
+<%= format_basic_info(day.overtime).to_f + 5.00 if day.overtime.present? && format_basic_info(day.overtime).to_f.between?(0.00, 6.00) %>
+
+<!--時間外時間計算式-->
+<!--23:59まで　→　終了時間　ー　勤務終了時間-->
+<!--0:00 〜 6:00 → 5:00(勤務終了時間から0:00までの時間) + 終了時間-->
+<!--※終了時間がそれ以外は一旦想定外-->

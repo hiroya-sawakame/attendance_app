@@ -23,7 +23,7 @@
                   <td><%= l(@day.worked_on, format: :short) %></td>
                   <td><%= render 'attendances/week_day', day: @day %></td>
                   <td><%= f.time_field :overtime, class: "form-control", required: true %></td>
-                  <td></td>
+                  <td><%= f.check_box :checkbox %></td>
                   <td><%= f.text_field :content, class: "form-control", required: true %></td>
                   <% if @user.id == 2 %>
                     <td>

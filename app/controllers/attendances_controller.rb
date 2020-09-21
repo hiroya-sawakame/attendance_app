@@ -35,10 +35,25 @@ class AttendancesController < ApplicationController
   end
 
   def create_overtime
-    @attendance = Attendance.find_by(id: params[:format])
-    @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
-    flash[:info] = '残業申請しました。'
-    redirect_back(fallback_location: root_path)
+    if params[:overtime].to_f.between?(0.00, 6.00)
+      if params[:checkbox] == "1"
+        @attendance = Attendance.find_by(id: params[:format])
+        @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
+        flash[:info] = '残業申請しました。'
+        redirect_back(fallback_location: root_path)
+      else
+        flash[:danger] = '0:00を超える場合は「翌日」にチェックをいれてください。'
+        redirect_back(fallback_location: root_path)
+      end
+    elsif params[:overtime].to_f.between?(19.01, 23.59)
+      @attendance = Attendance.find_by(id: params[:format])
+      @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
+      flash[:info] = '残業申請しました。'
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:danger] = 'その時間では申請できません。<br>19:01〜6:00の時間帯で申請してください。'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def approval_overtime
@@ -54,21 +69,16 @@ class AttendancesController < ApplicationController
 
   def approval_overtime_done
     ActiveRecord::Base.transaction do # トランザクションを開始します。
-
       attendances_day_status_params.each do |id, item|
-        p '--test--'
-        p params[:attendances]
-        p '--test_2--'
-        p params[:attendances][:id]
-        p '--test_3--'
-        # binding.pry
-        if params[:checkbox] == true
+        if params[:attendances]["#{id}"][:id] == "1"
           attendance = Attendance.find(id)
           attendance.update_attributes!(item)
+          flash[:info] = "申請内容を返信しました。"
+        else
+          flash[:warning] = '申請の可否を返信できなかったものがあります。<br>変更欄にチェックを入れてください。'
         end
       end
     end
-    flash[:info] = '申請内容を確認しました。'
     redirect_back(fallback_location: root_path)
 
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
@@ -98,7 +108,7 @@ class AttendancesController < ApplicationController
   end
 
   def attendances_day_status_params
-    params.permit(attendances: [:day_status, :checkbox])[:attendances]
+    params.permit(attendances: [:day_status])[:attendances]
   end
   
   # 管理権限者、または現在ログインしているユーザーを許可します。
