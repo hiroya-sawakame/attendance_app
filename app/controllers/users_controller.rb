@@ -11,8 +11,11 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
-    @day_status_boss = Attendance.where(day_status: 0).count
-    @day_status_staff = Attendance.where(day_status: 1).count
+    if current_user.id == 2
+      @day_status = Attendance.where(day_status: 0).count
+    elsif current_user.id == 3
+      @day_status = Attendance.where(day_status: 1).count
+    end
   end
   
   def new

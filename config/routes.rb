@@ -12,9 +12,10 @@ Rails.application.routes.draw do
     member do
       get 'edit_basic_info'
       get 'overtime', to: 'attendances#overtime'
-      get 'approval_overtime', to: 'attendances#approval_overtime'
+      get 'approval_overtimes', to: 'attendances#approval_overtimes'
+      get 'time_changes', to: 'attendances#time_changes'
       patch 'create_overtime', to: 'attendances#create_overtime'
-      patch 'approval_overtime', to: 'attendances#approval_overtime_done'
+      patch 'approval_overtimes', to: 'attendances#approval_overtimes_done'
       patch 'update_basic_info'
       get 'attendances/edit_one_month'
       patch 'attendances/update_one_month'
