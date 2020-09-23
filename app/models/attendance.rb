@@ -6,19 +6,26 @@ class Attendance < ApplicationRecord
 
   validate :finished_at_is_invalid_without_a_started_at
   validate :started_at_than_finished_at_fast_if_invalid
-  validate :started_at_is_invalid_without_a_finished_at
+  # validate :started_at_is_invalid_without_a_finished_at
+  # validate :boss_check
 
   def finished_at_is_invalid_without_a_started_at
     errors.add(:started_at, "が必要です") if started_at.blank? && finished_at.present?
   end
-
-  def started_at_is_invalid_without_a_finished_at
-    errors.add(:finished_at, "が必要です") if finished_at.blank? && started_at.present?
-  end
+  #
+  # def started_at_is_invalid_without_a_finished_at
+  #   errors.add(:finished_at, "が必要です") if finished_at.blank? && started_at.present?
+  # end
   
   def started_at_than_finished_at_fast_if_invalid
     if started_at.present? && finished_at.present?
       errors.add(:started_at, "より早い退勤時間は無効です。") if started_at > finished_at
     end
   end
+
+  # def boss_check
+  #   if started_at.present? && finished_at.present?
+  #     errors.add(:month_status,"指示者を選択してください。") if month_status.blank?
+  #   end
+  # end
 end

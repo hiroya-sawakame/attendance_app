@@ -26,18 +26,20 @@
   </table>
 </div>
 
-<h5>【 所属長承認申請のお知らせ 】</h5>
+<% if @user.id == 2 || @user.id ==3 %>
+  <h5>【 所属長承認申請のお知らせ 】</h5>
 
-<% if @day_status > 0 %>
-  <h5 class="font-red">【 残業申請のお知らせ 】<%= link_to "#{@day_status}件の残業申請があります。", approval_overtimes_user_path(@user), remote: true, class: "font-red" %></h5>
-<% else %>
-  <h5>【 残業申請のお知らせ 】</h5>
-<% end %>
+  <% if @day_status > 0 %>
+    <h5 class="font-red">【 残業申請のお知らせ 】<%= link_to "#{@day_status}件の残業申請があります。", approval_overtimes_user_path(@user), remote: true, class: "font-red" %></h5>
+  <% else %>
+    <h5>【 残業申請のお知らせ 】</h5>
+  <% end %>
 
-<% if @day_status > 0 %>
-  <h5 class="font-red">【 勤怠変更申請のお知らせ 】<%= link_to "#{@day_status}件の残業申請があります。", time_changes_user_path(@user), remote: true, class: "font-red" %></h5>
-<% else %>
-  <h5>【 勤怠変更申請のお知らせ 】</h5>
+  <% if @month_status > 0 %>
+    <h5 class="font-red">【 勤怠変更申請のお知らせ 】<%= link_to "#{@month_status}件の残業申請があります。", time_changes_user_path(@user), remote: true, class: "font-red" %></h5>
+  <% else %>
+    <h5>【 勤怠変更申請のお知らせ 】</h5>
+  <% end %>
 <% end %>
 
 <div class="btn-users-show">

@@ -108,7 +108,7 @@ class AttendancesController < ApplicationController
   
   # 1ヶ月分の勤怠情報を扱います。
   def attendances_params
-    params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+    params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :month_status])[:attendances]
   end
 
   def attendances_day_status_params

@@ -15,6 +15,7 @@
           <font color="RED">※入力必須項目</font></th>
         <th>在社時間</th>
         <th>備考</th>
+        <th>指示者確認㊞</th>
       </tr>
       </thead>
       <tbody>
@@ -36,6 +37,19 @@
               <% end %>
             </td>
             <td><%= attendance.text_field :note, class: "form-control" %></td>
+            <% if @user.id == 2 %>
+              <td>
+                <%= attendance.select :month_status, {"きださん": 1}, { include_blank: '選択'}, class: "form-control" %>
+              </td>
+            <% elsif @user.id == 3 %>
+              <td>
+                <%= attendance.select :month_status, {"つとむ先輩": 0}, { include_blank: '選択'}, class: "form-control" %>
+              </td>
+            <% else %>
+              <td>
+                <%= attendance.select :month_status, {"つとむ先輩": 0, "きださん": 1}, { include_blank: '選択'}, class: "form-control" %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       <% end %>
@@ -44,7 +58,7 @@
   </div>
 
   <div class="center">
-    <%= f.submit "まとめて更新", class: "btn btn-lg btn-primary" %>
+    <%= f.submit "修正情報を一括申請", class: "btn btn-lg btn-primary" %>
     <%= link_to "キャンセル", user_path(date: @first_day), class: "btn btn-lg btn-default" %>
   </div>
   <div class="center">

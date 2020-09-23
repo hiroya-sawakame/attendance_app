@@ -1,7 +1,18 @@
-<% if day.day_status == 0 || day.day_status == 1 %>
+<div class="pb-1">
+<% if day.month_status == 0 || day.day_status == 1 %>
   残業申請　<span class="label label-warning">承認待ち</span>
 <% elsif day.day_status == 2 %>
   残業申請　<span class="label label-success">承認済み</span>
 <% elsif day.day_status == 3 %>
-  残業申請　<span class="label label-danger">否認</span>
+  残業申請　<span class="label label-danger">申請否認</span>
 <% end %>
+</div>
+<div>
+<% if day.month_status == 0 || day.month_status == 1 %>
+  時間修正　<span class="label label-warning">承認待ち</span>
+<% elsif day.month_status == 2 %>
+  時間修正　<span class="label label-success">承認済み</span>
+<% elsif day.month_status == 3 %>
+  時間修正　<span class="label label-danger">申請否認</span>
+<% end %>
+</div>

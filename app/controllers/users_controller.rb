@@ -13,8 +13,10 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
     if current_user.id == 2
       @day_status = Attendance.where(day_status: 0).count
+      @month_status = Attendance.where(month_status: 0).count
     elsif current_user.id == 3
       @day_status = Attendance.where(day_status: 1).count
+      @month_status = Attendance.where(month_status: 1).count
     end
   end
   
