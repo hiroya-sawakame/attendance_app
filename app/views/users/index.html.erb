@@ -10,7 +10,8 @@
       <th class="center"><%= User.human_attribute_name :department %></th>
       <% if current_user.admin? %>
         <th class="center"><%= User.human_attribute_name :basic_time %></th>
-        <th class="center"><%= User.human_attribute_name :work_time %></th>
+        <th class="center">勤務開始時間</th>
+        <th class="center">勤務終了時間</th>
       <% end %>
       <th></th>
     </tr>
@@ -29,6 +30,7 @@
         <% if current_user.admin? %>
           <td class="center"><%= format_basic_info(user.basic_time) %></td>
           <td class="center"><%= format_basic_info(user.work_start_time) %></td>
+          <td class="center"><%= format_basic_info(user.work_end_time) %></td>
         <% end %>
         <td class="center">
           <% if current_user.admin? && !current_user?(user) %>

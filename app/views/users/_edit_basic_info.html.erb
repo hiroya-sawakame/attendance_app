@@ -27,6 +27,9 @@
             <%= f.label "勤務開始時間", class: "label-#{yield(:class_text)}" %>
             <%= f.time_field :work_start_time, class: "form-control" %>
 
+            <%= f.label "勤務終了時間", class: "label-#{yield(:class_text)}" %>
+            <%= f.time_field :work_end_time, class: "form-control" %>
+
             <div class="center">
               <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
               <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">

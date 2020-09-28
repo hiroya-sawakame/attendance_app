@@ -31,7 +31,7 @@
               <td><%= l(day_status.overtime, format: :time) if day_status.overtime.present? %></td>
               <td><%= format_basic_info(User.find(id=day_status.user_id).work_end_time) %></td>
               <td>
-                <%= (format_basic_info(day_status.overtime).to_d - format_basic_info(User.find(id=day_status.user_id).work_end_time).to_d).to_f if day_status.overtime.present? %>
+                <%= render 'users/time_calculation', day: day_status, user: user %>
               </td>
               <td><%= day_status.content %></td>
               <%= f.fields_for "attendances[]", day_status do |attendance| %>
