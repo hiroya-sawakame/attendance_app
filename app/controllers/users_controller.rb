@@ -59,6 +59,18 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+
+  def export_month
+    @user = User.find(params[:id])
+    @last_day = @first_day.end_of_month
+    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).order('worked_on')
+    p '--test--'
+    respond_to do |format|
+      format.csv do # csv用の処理を書く
+      send_data render_to_string, filename: "勤怠情報.csv", type: :csv
+      end
+    end
+  end
   
   private
   
