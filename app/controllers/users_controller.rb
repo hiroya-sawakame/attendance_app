@@ -62,12 +62,12 @@ class UsersController < ApplicationController
 
   def export_month
     @user = User.find(params[:id])
+    @first_day = Date.parse(params[:date]) ? Date.parse(params[:date]) : Date.today.beginning_of_month
     @last_day = @first_day.end_of_month
     @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).order('worked_on')
-    p '--test--'
     respond_to do |format|
-      format.csv do # csv用の処理を書く
-      send_data render_to_string, filename: "勤怠情報.csv", type: :csv
+      format.csv do
+        send_data render_to_string, filename: "#{l(@first_day, format: :middle)}勤怠.csv", type: :csv
       end
     end
   end

@@ -51,7 +51,7 @@
 </div>
 
 <div class="btn-users-show">
-  <%#= link_to "CSV出力", user_path({date: @first_day, format: :csv}), class: "btn btn-primary" %>
+  <%= link_to "CSV出力", export_month_user_path({date: @first_day, format: :csv}), class: "btn btn-primary" %>
   <%= link_to "勤怠修正ログ", '#' , class: "btn btn-primary" %>
 </div>
 
