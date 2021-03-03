@@ -73,6 +73,14 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def changed_log
+    @first_day = params[:date].nil? ?
+                   Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
+    @user = User.find(params[:id])
+    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).where.not(month_status: nil)
+  end
   
   private
   

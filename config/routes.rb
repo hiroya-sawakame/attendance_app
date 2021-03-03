@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'edit_basic_info'
+      get 'changed_log'
+      # js ファイルが絡むルーティングは to:〜 を設定
       get 'overtime', to: 'attendances#overtime'
       patch 'create_overtime', to: 'attendances#create_overtime'
       get 'approval_overtime', to: 'attendances#approval_overtime'

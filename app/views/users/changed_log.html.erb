@@ -1,0 +1,39 @@
+<h1>勤怠ログ</h1>
+<div class="center">
+  <div>
+    <%= link_to "⇦ 前月へ", changed_log_user_path(date: @first_day.prev_month), class: "btn btn-info" %>
+    【<%= l(@first_day, format: :middle) %>】
+    <%= link_to "次月へ ⇨", changed_log_user_path(date: @first_day.next_month), class: "btn btn-info" %>
+  </div>
+  <div class="btn-signup">
+    <table class="table table-bordered table-condensed">
+      <tr>
+        <td>日付</td>
+        <td colspan>修正前出社時間</td>
+        <td colspan>修正前退社時間</td>
+        <td colspan>修正後出社時間</td>
+        <td colspan>修正後退社時間</td>
+        <td>承認者</td>
+      </tr>
+      <% @dates.each do |day| %>
+        <% if day.month_status == 2 %>
+          <tr>
+            <td><%= l(day.worked_on, format: :short) %></td>
+            <td><%= day.before_changed_started_at.present? ? l(day.before_changed_started_at, format: :time) : "--:--" %></td>
+            <td><%= day.before_changed_finished_at.present? ? l(day.before_changed_finished_at, format: :time) : "--:--" %></td>
+            <td><%= day.started_at.present? ? l(day.started_at, format: :time) : "--:--" %></td>
+            <td><%= day.finished_at.present? ? l(day.finished_at, format: :time) : "--:--" %></td>
+            <% if day.month_status == 2 %>
+              <td>つとむ先生</td>
+            <% elsif day.month_status == 4 %>
+              <td>きだ先生</td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+  <div>
+    <%= link_to "戻る", user_path(@user, params:{first_day: @first_day }), class: "btn btn-success" %>
+  </div>
+</div>

@@ -100,7 +100,13 @@ class AttendancesController < ApplicationController
       attendances_month_status_params.each do |id, item|
         if params[:attendances]["#{id}"][:id] == "1"
           attendance = Attendance.find(id)
-          attendance.update_attributes!(item)
+          attendance.update_attributes!(
+            month_status: item[:month_status],
+            before_changed_started_at: attendance.started_at,
+            before_changed_finished_at: attendance.finished_at,
+            started_at: attendance.changed_started_at,
+            finished_at: attendance.changed_finished_at
+          )
           flash[:info] = "申請内容を返信しました。"
         else
           flash[:warning] = '申請の可否を返信できなかったものがあります。<br>変更欄にチェックを入れてください。'

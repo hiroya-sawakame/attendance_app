@@ -35,13 +35,19 @@
                   <td><%= render 'attendances/week_day', day: day_status %></td>
                   <td><%= l(day_status.started_at, format: :time) if day_status.started_at.present? %></td>
                   <td><%= l(day_status.finished_at, format: :time) if day_status.finished_at.present? %></td>
-                  <td><%= l(day_status.changed_started_at, format: :time) if day_status.changed_started_at.present? %></td>
-                  <td><%= l(day_status.changed_finished_at, format: :time) if day_status.changed_finished_at.present? %></td>
+                  <td><%= l(day_status.changed_started_at, format: :time) %></td>
+                  <td><%= l(day_status.changed_finished_at, format: :time) %></td>
                   <td><%= day_status.note %></td>
                   <%= f.fields_for "attendances[]", day_status do |attendance| %>
-                    <td>
-                      <%= attendance.select :month_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
-                    </td>
+                    <% if @user.id == 2 %>
+                      <td>
+                        <%= attendance.select :month_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                      </td>
+                    <% elsif @user.id == 3 %>
+                      <td>
+                        <%= attendance.select :month_status, {"承認": 4, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                      </td>
+                    <% end %>
                     <td><%= attendance.check_box :id %></td>
                     <td></td>
                   <% end %>
