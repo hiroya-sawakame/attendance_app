@@ -1,6 +1,16 @@
 class AttendancesController < ApplicationController
   
-  before_action :set_user, only: [:edit_one_month, :update_one_month, :overtime]
+  before_action :set_user,
+                only: [
+                  :edit_one_month,
+                  :update_one_month,
+                  :overtime,
+                  :create_overtime,
+                  :approval_overtime,
+                  :approval_overtime_done,
+                  :approval_changed_working_time,
+                  :approval_changed_working_time_done,
+                ]
   before_action :logged_in_user, only: [:update, :edit_one_month, :overtime]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
   before_action :set_one_month, only: [:edit_one_month, :overtime]
@@ -40,20 +50,21 @@ class AttendancesController < ApplicationController
         @attendance = Attendance.find_by(id: params[:format])
         @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
         flash[:info] = '残業申請しました。'
-        redirect_back(fallback_location: root_path)
       else
         flash[:danger] = '0:00を超える場合は「翌日」にチェックをいれてください。'
-        redirect_back(fallback_location: root_path)
       end
     elsif params[:overtime].to_f.between?(19.01, 23.59)
-      @attendance = Attendance.find_by(id: params[:format])
-      @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
-      flash[:info] = '残業申請しました。'
-      redirect_back(fallback_location: root_path)
+      if params[:checkbox] == "0"
+        @attendance = Attendance.find_by(id: params[:format])
+        @attendance.update_attributes(overtime: params[:overtime], content: params[:content], day_status: params[:day_status])
+        flash[:info] = '残業申請しました。'
+      elsif params[:checkbox] == "1"
+        flash[:danger] = '19:00 ~ 23:59の時間で「翌日」にチェックを入れることはできません。'
+      end
     else
       flash[:danger] = 'その時間では申請できません。<br>19:01〜6:00の時間帯で申請してください。'
-      redirect_back(fallback_location: root_path)
     end
+    redirect_to @user
   end
 
   def approval_overtime
@@ -78,11 +89,11 @@ class AttendancesController < ApplicationController
         end
       end
     end
-    redirect_back(fallback_location: root_path)
+    redirect_to @user
 
     rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-      redirect_to attendances_edit_one_month_user_url(date: params[:date])
+      redirect_to @user
   end
 
   def approval_changed_working_time
@@ -113,11 +124,11 @@ class AttendancesController < ApplicationController
         end
       end
     end
-    redirect_back(fallback_location: root_path)
+    redirect_to @user
 
   rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
-    redirect_to attendances_edit_one_month_user_url(date: params[:date])
+    redirect_to @user
   end
 
   def update_one_month

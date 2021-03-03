@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :confirm]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update, :show]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
-  before_action :set_one_month, only: [:show]
+  before_action :set_one_month, only: [:show, :confirm]
   
   def index
     @users = User.paginate(page: params[:page])
@@ -80,6 +80,10 @@ class UsersController < ApplicationController
     @last_day = @first_day.end_of_month
     @user = User.find(params[:id])
     @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).where.not(month_status: nil)
+  end
+
+  def confirm
+    @worked_sum = @attendances.where.not(started_at: nil).count
   end
   
   private

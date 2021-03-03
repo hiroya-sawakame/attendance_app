@@ -39,7 +39,7 @@
                 <%= attendance.select :day_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
               </td>
               <td><%= attendance.check_box :id %></td>
-              <td></td>
+              <td><%= link_to "確認", confirm_user_path(user), class: "btn btn-primary" %></td>
               <% end %>
             </tr>
             <% end %>

@@ -1,0 +1,82 @@
+<% provide(:title, '勤怠表示') %>
+<div>
+  <h1>勤怠表示画面</h1>
+  <div>
+    <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+      <thead>
+      <tr>
+        <th rowspan="2">日付</th>
+        <th rowspan="2">曜日</th>
+        <th colspan="5">実績</th>
+        <th colspan="4">所定外勤務</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>出社時間</th>
+        <th>退社時間</th>
+        <th>在社時間</th>
+        <th>備考</th>
+        <th>終了時間</th>
+        <th>時間外時間</th>
+        <th>業務処理内容</th>
+        <th>指示者確認㊞</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @attendances.each do |day| %>
+        <tr>
+          <td><%= l(day.worked_on, format: :short) %></td>
+          <td><%= render 'attendances/week_day', day: day %></td>
+          <td>
+            <% if btn_text = attendance_state(day) %>
+              <%= link_to "#{btn_text}登録", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+            <% end %>
+          </td>
+          <td><%= l(day.started_at, format: :time) if day.started_at.present? %></td>
+          <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td>
+          <td>
+            <% if day.started_at.present? && day.finished_at.present? %>
+              <%= str_times = working_times(day.started_at, day.finished_at) %>
+              <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% end %>
+          </td>
+          <td><%= day.note %></td>
+          <td><%= l(day.overtime, format: :time) if day.overtime.present? %></td>
+          <td>
+            <%= render 'time_calculation', day: day, user: @user %>
+          </td>
+          <td><%= day.content %></td>
+          <td>
+            <%= render 'attendances/day_status', day: day %><br>
+            <%= render 'attendances/month_status', day: day %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+
+      <tfoot>
+      <!--rowspan:縦結合、colspan：横結合-->
+      <tr>
+        <td colspan="2">累計日数</td>
+        <td colspan="2">総合勤務時間</td>
+        <td colspan="2">累計在社時間</td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+        <td rowspan="2"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= @attendances.count %></td>
+        <td colspan="2"><%= format_basic_info(@user.basic_time).to_f * @worked_sum %></td>
+        <td colspan="2"></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <%= link_to "勤怠画面に戻る", user_path(current_user), class: "btn btn-success" %>
+  <%#= link_to "申請画面に戻る", approval_changed_working_time_user_path(current_user), remote: true, class: "btn btn-success" %>
+</div>
+<div id="approval_changed_working_time" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

@@ -19,12 +19,18 @@ class ApplicationController < ActionController::Base
 
   # アクセスしたユーザーが現在ログインしているユーザーか確認
   def correct_user
-    redirect_to(root_url) unless current_user?(@user)
+    unless current_user?(@user)
+      flash[:danger] = "このページの閲覧権限が有りません。"
+      redirect_to root_url
+    end
   end
 
   # システム管理権限所有かどうか判定
   def admin_user
-    redirect_to root_url unless current_user.admin?
+    unless current_user.admin?
+      flash[:danger] = "このページの閲覧権限が有りません。"
+      redirect_to root_url
+    end
   end
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セット
