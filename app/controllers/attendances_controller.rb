@@ -10,7 +10,7 @@ class AttendancesController < ApplicationController
   def update
     @user = User.find(params[:user_id])
     @attendance = Attendance.find(params[:id])
-    # 出勤時間が未登録であることを判定します。
+    # 出勤時間が未登録であることを判定
     if @attendance.started_at.nil?
       if @attendance.update_attributes(started_at: Time.current.change(sec: 0))
         flash[:info] = "おはようございます！"
@@ -60,7 +60,6 @@ class AttendancesController < ApplicationController
     if params[:id] == "2"
       @users = User.joins(:attendances).where(attendances: { day_status: 0}).distinct
       @day_status_all = Attendance.where(day_status: 0)
-      # binding.pry
     elsif params[:id] == "3"
       @users = User.joins(:attendances).where(attendances: { day_status: 1}).distinct
       @day_status_all = Attendance.where(day_status: 1)
@@ -68,7 +67,7 @@ class AttendancesController < ApplicationController
   end
 
   def approval_overtime_done
-    ActiveRecord::Base.transaction do # トランザクションを開始します。
+    ActiveRecord::Base.transaction do
       attendances_day_status_params.each do |id, item|
         if params[:attendances]["#{id}"][:id] == "1"
           attendance = Attendance.find(id)
@@ -81,37 +80,70 @@ class AttendancesController < ApplicationController
     end
     redirect_back(fallback_location: root_path)
 
-    rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+    rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
       flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
       redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
 
+  def approval_changed_working_time
+    if params[:id] == "2"
+      @users = User.joins(:attendances).where(attendances: { month_status: 0}).distinct
+      @month_status_all = Attendance.where(month_status: 0)
+    elsif params[:id] == "3"
+      @users = User.joins(:attendances).where(attendances: { month_status: 1}).distinct
+      @month_status_all = Attendance.where(month_status: 1)
+    end
+  end
+
+  def approval_changed_working_time_done
+    ActiveRecord::Base.transaction do
+      attendances_month_status_params.each do |id, item|
+        if params[:attendances]["#{id}"][:id] == "1"
+          attendance = Attendance.find(id)
+          attendance.update_attributes!(item)
+          flash[:info] = "申請内容を返信しました。"
+        else
+          flash[:warning] = '申請の可否を返信できなかったものがあります。<br>変更欄にチェックを入れてください。'
+        end
+      end
+    end
+    redirect_back(fallback_location: root_path)
+
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_to attendances_edit_one_month_user_url(date: params[:date])
+  end
+
   def update_one_month
-    ActiveRecord::Base.transaction do # トランザクションを開始します。
+    ActiveRecord::Base.transaction do # トランザクションを開始
       attendances_params.each do |id, item|
         attendance = Attendance.find(id)
-        attendance.update_attributes!(item)
+        attendance.update_attributes!(changed_started_at: item[:started_at], changed_finished_at: item[:finished_at], note: item[:note], month_status: item[:month_status])
       end
     end
     flash[:success] = "1ヶ月分の勤怠情報を更新しました。"
     redirect_to user_url(date: params[:date])
-  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
     flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました、下記の３点をご確認ください。<br>" + "①　出勤・退勤時間は両方入力されているか？<br>" + "②　出勤より退勤時間の方が早い時間ではないか？<br>" + "③　備考欄は50文字以内になっているか？"
     redirect_to attendances_edit_one_month_user_url(date: params[:date])
   end
   
   private
   
-  # 1ヶ月分の勤怠情報を扱います。
+  # 1ヶ月分の勤怠情報
   def attendances_params
-    params.require(:user).permit(attendances: [:started_at, :finished_at, :note])[:attendances]
+    params.require(:user).permit(attendances: [:started_at, :finished_at, :note, :month_status])[:attendances]
   end
 
   def attendances_day_status_params
     params.permit(attendances: [:day_status])[:attendances]
   end
+
+  def attendances_month_status_params
+    params.permit(attendances: [:month_status])[:attendances]
+  end
   
-  # 管理権限者、または現在ログインしているユーザーを許可します。
+  # 管理権限者、または現在ログインしているユーザーを許可
   def admin_or_correct_user
     @user = User.find(params[:user_id]) if @user.blank?
     unless current_user?(@user) || current_user.admin?

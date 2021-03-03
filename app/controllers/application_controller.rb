@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     @user = User.find(params[:id])
   end
 
-  # ログイン済みのユーザーか確認します。
+  # ログイン済みのユーザーか確認
   def logged_in_user
     unless logged_in?
       store_location
@@ -17,17 +17,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # アクセスしたユーザーが現在ログインしているユーザーか確認します。
+  # アクセスしたユーザーが現在ログインしているユーザーか確認
   def correct_user
     redirect_to(root_url) unless current_user?(@user)
   end
 
-  # システム管理権限所有かどうか判定します。
+  # システム管理権限所有かどうか判定
   def admin_user
     redirect_to root_url unless current_user.admin?
   end
 
-  # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
+  # ページ出力前に1ヶ月分のデータの存在を確認・セット
   def set_one_month
     @first_day = params[:date].nil? ?
                    Date.current.beginning_of_month : params[:date].to_date

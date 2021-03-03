@@ -13,6 +13,8 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
     @day_status_boss = Attendance.where(day_status: 0).count
     @day_status_staff = Attendance.where(day_status: 1).count
+    @month_status_boss = Attendance.where(month_status: 0).count
+    @month_status_staff = Attendance.where(month_status: 1).count
   end
   
   def new

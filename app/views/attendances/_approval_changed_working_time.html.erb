@@ -1,0 +1,62 @@
+<% provide(:class_text, 'basic-info') %>
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title">【勤怠時間修正申請一覧】</h1>
+    </div>
+    <div class="modal-body">
+      <%= form_with(url: approval_changed_working_time_user_path, local: true, method: :patch) do |f| %>
+        <% @users.each do |user| %>
+          <h3 class="text-center">【<%= user.name %>さんからの勤怠時間修正申請】</h3>
+          <table class="table-bordered table-condensed" style="margin: auto">
+            <tr>
+              <th rowspan="2">日付</th>
+              <th rowspan="2">曜日</th>
+              <th colspan="2">修正前</th>
+              <th colspan="2">修正後</th>
+              <th rowspan="2">備考</th>
+              <th rowspan="2">指示者確認㊞</th>
+              <th rowspan="2">変更</th>
+              <th rowspan="2">勤怠を確認する</th>
+            </tr>
+            <tr>
+              <th>出社時間</th>
+              <th>退社時間</th>
+              <th>出社時間</th>
+              <th>退社時間</th>
+            </tr>
+            <% @month_status_all.each do |day_status| %>
+              <% if user.id == day_status.user_id %>
+                <tr>
+                  <td><%= l(day_status.worked_on, format: :short) %></td>
+                  <td><%= render 'attendances/week_day', day: day_status %></td>
+                  <td><%= l(day_status.started_at, format: :time) if day_status.started_at.present? %></td>
+                  <td><%= l(day_status.finished_at, format: :time) if day_status.finished_at.present? %></td>
+                  <td><%= l(day_status.changed_started_at, format: :time) if day_status.changed_started_at.present? %></td>
+                  <td><%= l(day_status.changed_finished_at, format: :time) if day_status.changed_finished_at.present? %></td>
+                  <td><%= day_status.note %></td>
+                  <%= f.fields_for "attendances[]", day_status do |attendance| %>
+                    <td>
+                      <%= attendance.select :month_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                    </td>
+                    <td><%= attendance.check_box :id %></td>
+                    <td></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        <% end %>
+        <div class="center_btn">
+          <%= f.submit '変更を送信する', class: "btn btn-primary btn-#{yield(:class_text)}" %>
+          <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
+            キャンセル
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
