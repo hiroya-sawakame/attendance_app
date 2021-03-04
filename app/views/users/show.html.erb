@@ -115,12 +115,12 @@
             <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
           <% end %>
         </td>
-        <td><%= day.note %></td>
+        <td><%= day.note.truncate(10) %></td>
         <td><%= l(day.overtime, format: :time) if day.overtime.present? %></td>
         <td>
           <%= render 'time_calculation', day: day, user: @user %>
         </td>
-        <td><%= day.content %></td>
+        <td><%= day.content.to_s.truncate(10) %></td>
         <td>
           <%= render 'attendances/day_status', day: day %><br>
           <%= render 'attendances/month_status', day: day %>

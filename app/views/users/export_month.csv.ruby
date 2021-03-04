@@ -1,7 +1,7 @@
 require 'csv'
 
 CSV.generate do |csv|
-  column_names = %w(日付 曜日 出社(H) 退社(M))
+  column_names = %w(日付 曜日 出社 退社)
   csv << column_names
   @dates.each do |day|
     column_values = [

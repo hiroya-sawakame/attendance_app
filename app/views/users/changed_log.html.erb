@@ -16,7 +16,7 @@
         <td>承認者</td>
       </tr>
       <% @dates.each do |day| %>
-        <% if day.month_status == 2 %>
+        <% if day.month_status == 2 || day.month_status == 4 %>
           <tr>
             <td><%= l(day.worked_on, format: :short) %></td>
             <td><%= day.before_changed_started_at.present? ? l(day.before_changed_started_at, format: :time) : "--:--" %></td>

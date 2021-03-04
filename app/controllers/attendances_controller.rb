@@ -10,11 +10,12 @@ class AttendancesController < ApplicationController
                   :approval_overtime_done,
                   :approval_changed_working_time,
                   :approval_changed_working_time_done,
-                  :create_month_confirm_status
+                  :create_month_confirm_status,
+                  :approval_month_confirm
                 ]
   before_action :logged_in_user, only: [:update, :edit_one_month, :overtime]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
-  before_action :set_one_month, only: [:edit_one_month, :overtime]
+  before_action :set_one_month, only: [:edit_one_month, :overtime, :create_month_confirm_status]
   
   UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
   
@@ -42,7 +43,6 @@ class AttendancesController < ApplicationController
   end
 
   def create_month_confirm_status
-    @first_day = Date.parse(params[:date]) ? Date.parse(params[:date]) : Date.today.beginning_of_month
     @dates = @user.attendances.find_by!(worked_on: @first_day)
     @dates.update!(month_confirm_status: params[:month_confirm_status])
     flash[:info] = "#{ l(@first_day, format: :middle) }の勤怠を申請しました。"

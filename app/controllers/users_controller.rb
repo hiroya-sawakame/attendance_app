@@ -1,9 +1,19 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :confirm]
+  before_action :set_user, only: [
+                  :show,
+                  :edit,
+                  :update,
+                  :destroy,
+                  :edit_basic_info,
+                  :update_basic_info,
+                  :confirm,
+                  :export_month,
+                  :changed_log
+                ]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update, :show]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
-  before_action :set_one_month, only: [:show, :confirm]
+  before_action :set_one_month, only: [:show, :confirm, :export_month, :changed_log]
   
   def index
     @users = User.paginate(page: params[:page])
@@ -13,13 +23,9 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
     @dates = @user.attendances.find_by!(worked_on: @first_day)
     if @user.id == 2
-      @month_confirm_status = Attendance.where(month_confirm_status: 0).distinct.count
-      @day_status = Attendance.where(day_status: 0).count
-      @month_status = Attendance.where(month_status: 0).count
+      all_status(0)
     elsif @user.id == 3
-      @month_confirm_status = Attendance.where(month_confirm_status: 1).distinct.count
-      @day_status = Attendance.where(day_status: 1).count
-      @month_status = Attendance.where(month_status: 1).count
+      all_status(1)
     end
   end
   
@@ -69,9 +75,6 @@ class UsersController < ApplicationController
   end
 
   def export_month
-    @user = User.find(params[:id])
-    @first_day = Date.parse(params[:date]) ? Date.parse(params[:date]) : Date.today.beginning_of_month
-    @last_day = @first_day.end_of_month
     @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).order('worked_on')
     respond_to do |format|
       format.csv do
@@ -81,10 +84,6 @@ class UsersController < ApplicationController
   end
 
   def changed_log
-    @first_day = params[:date].nil? ?
-                   Date.current.beginning_of_month : params[:date].to_date
-    @last_day = @first_day.end_of_month
-    @user = User.find(params[:id])
     @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).where.not(month_status: nil)
   end
 
@@ -100,5 +99,11 @@ class UsersController < ApplicationController
   
   def basic_info_params
     params.require(:user).permit(:department, :basic_time, :work_start_time)
+  end
+
+  def all_status(status)
+    @month_confirm_status = Attendance.where(month_confirm_status: status).distinct.count
+    @day_status = Attendance.where(day_status: status).count
+    @month_status = Attendance.where(month_status: status).count
   end
 end
