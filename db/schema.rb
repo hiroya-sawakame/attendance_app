@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210303090414) do
+ActiveRecord::Schema.define(version: 20210304013826) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20210303090414) do
     t.integer "month_status"
     t.datetime "before_changed_finished_at"
     t.datetime "before_changed_started_at"
+    t.integer "month_confirm_status"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -49,9 +50,9 @@ ActiveRecord::Schema.define(version: 20210303090414) do
     t.string "remember_digest"
     t.boolean "admin"
     t.string "department"
-    t.datetime "basic_time", default: "2021-02-26 23:00:00"
-    t.datetime "work_start_time", default: "2021-02-27 01:00:00"
-    t.datetime "work_end_time", default: "2021-02-27 10:00:00"
+    t.datetime "basic_time", default: "2021-03-03 23:00:00"
+    t.datetime "work_start_time", default: "2021-03-04 01:00:00"
+    t.datetime "work_end_time", default: "2021-03-04 10:00:00"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

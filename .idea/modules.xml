@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/attendance_app.iml" filepath="$PROJECT_DIR$/.idea/attendance_app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../kintai-ruby/.idea/kintai-ruby.iml" filepath="$PROJECT_DIR$/../kintai-ruby/.idea/kintai-ruby.iml" />
     </modules>
   </component>
 </project>

@@ -11,10 +11,16 @@ class UsersController < ApplicationController
   
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
-    @day_status_boss = Attendance.where(day_status: 0).count
-    @day_status_staff = Attendance.where(day_status: 1).count
-    @month_status_boss = Attendance.where(month_status: 0).count
-    @month_status_staff = Attendance.where(month_status: 1).count
+    @dates = @user.attendances.find_by!(worked_on: @first_day)
+    if @user.id == 2
+      @month_confirm_status = Attendance.where(month_confirm_status: 0).distinct.count
+      @day_status = Attendance.where(day_status: 0).count
+      @month_status = Attendance.where(month_status: 0).count
+    elsif @user.id == 3
+      @month_confirm_status = Attendance.where(month_confirm_status: 1).distinct.count
+      @day_status = Attendance.where(day_status: 1).count
+      @month_status = Attendance.where(month_status: 1).count
+    end
   end
   
   def new

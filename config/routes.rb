@@ -13,8 +13,11 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       get 'changed_log'
       get 'confirm'
-      # js ファイルが絡むルーティングは to:〜 を設定
+      # to:〜 を設定(これを設定しないとusersControllerを参照してしまうため)
       get 'overtime', to: 'attendances#overtime'
+      post 'create_month_confirm_status', to: 'attendances#create_month_confirm_status'
+      get 'approval_month_confirm', to: 'attendances#approval_month_confirm'
+      patch 'approval_month_confirm', to: 'attendances#approval_month_confirm_done'
       patch 'create_overtime', to: 'attendances#create_overtime'
       get 'approval_overtime', to: 'attendances#approval_overtime'
       patch 'approval_overtime', to: 'attendances#approval_overtime_done'

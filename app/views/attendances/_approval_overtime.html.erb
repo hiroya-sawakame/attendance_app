@@ -36,7 +36,11 @@
               <td><%= day_status.content %></td>
               <%= f.fields_for "attendances[]", day_status do |attendance| %>
               <td>
-                <%= attendance.select :day_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                <% if @user.id == 2 %>
+                  <%= attendance.select :day_status, {"承認": 2, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                <% elsif @user.id == 3 %>
+                  <%= attendance.select :day_status, {"承認": 4, "否認": 3}, { include_blank: '選択'}, class: "form-control", required: true %>
+                <% end %>
               </td>
               <td><%= attendance.check_box :id %></td>
               <td><%= link_to "確認", confirm_user_path(user), class: "btn btn-primary" %></td>
