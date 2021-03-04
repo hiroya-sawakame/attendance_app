@@ -1,7 +1,9 @@
 <% if day.month_status == 0 || day.month_status == 1 %>
-  <span class="label label-warning">勤怠修正承認待ち</span>
-<% elsif day.month_status == 2 || day.month_status == 4 %>
-  <span class="label label-success">勤怠修正承認済み</span>
+  <span class="label label-warning">勤怠修正申請中</span>
+<% elsif day.month_status == 2 %>
+  <span class="label label-success">つとむ勤怠修正承認済み</span>
+<% elsif day.month_status == 4 %>
+  <span class="label label-success">きだ勤怠修正承認済み</span>
 <% elsif day.month_status == 3 %>
   <span class="label label-danger">勤怠修正否認</span>
 <% end %>

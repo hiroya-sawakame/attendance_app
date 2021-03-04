@@ -1,6 +1,8 @@
 <% provide(:title, @user.name) %>
 <div>
   <h1>勤怠管理画面</h1>
+
+<!--ユーザー基本情報-->
   <% if @user.id == 1 %>
     <p>(管理者)</p>
   <% elsif @user.id == 2 || @user.id == 3 %>
@@ -16,7 +18,6 @@
       <td>基本勤務時間：<%= format_basic_info(@user.basic_time) %></td>
       <td>月初日：<%= l(@first_day, format: :short) %></td>
     </tr>
-
     <tr>
       <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
@@ -26,40 +27,40 @@
   </table>
 </div>
 
-<% if @user.id == 2 %>
-  <h5>【 所属長承認申請のお知らせ 】</h5>
-  <% if @day_status_boss > 0 %>
+<!--各種申請お知らせ-->
+<% if @user.id == 2 || @user.id == 3 %>
+  <% if @month_confirm_status > 0 %>
     <h5 class="font-red">
-      【  残業申請のお知らせ 】<%= link_to "#{@day_status_boss}件の残業申請があります。", approval_overtime_user_path(@user), remote: true, class: "font-red" %>
+      【 所属長承認申請のお知らせ 】<%= link_to "#{@month_confirm_status}件の月の勤怠申請があります。", approval_month_confirm_user_path(@user), remote: true, class: "font-red" %>
     </h5>
   <% else %>
-    <h5>【 残業申請のお知らせ 】</h5>
+    <h5>
+      【 所属長承認申請のお知らせ 】
+    </h5>
   <% end %>
 
-  <% if @month_status_boss > 0 %>
+  <% if @day_status > 0 %>
     <h5 class="font-red">
-      【 勤怠時間修正申請のお知らせ 】<%= link_to "#{@month_status_boss}件の勤怠時間修正申請があります。", approval_changed_working_time_user_path(@user), remote: true, class: "font-red" %>
+      【 残業申請のお知らせ 】<%= link_to "#{@day_status}件の残業申請があります。", approval_overtime_user_path(@user), remote: true, class: "font-red" %>
     </h5>
   <% else %>
-    <h5>【 勤怠時間修正申請のお知らせ 】</h5>
+    <h5>
+      【 残業申請のお知らせ 】
+    </h5>
   <% end %>
 
-<% elsif  @user.id == 3 %>
-  <h5>【 所属長承認申請のお知らせ 】</h5>
-  <% if @day_status_staff > 0 %>
-    <h5 class="font-red">【  残業申請のお知らせ 】<%= link_to "#{@day_status_staff}件の残業申請があります。", approval_overtime_user_path(@user), remote: true, class: "font-red" %></h5>
-  <% else %>
-    <h5>【 残業申請のお知らせ 】</h5>
-  <% end %>
-  <% if @month_status_staff > 0 %>
+  <% if @month_status > 0 %>
     <h5 class="font-red">
-      【 勤怠時間修正申請のお知らせ 】<%= link_to "#{@month_status_staff}件の勤怠時間修正申請があります。", approval_changed_working_time_user_path(@user), remote: true, class: "font-red" %>
+      【 勤怠時間修正申請のお知らせ 】<%= link_to "#{@month_status}件の勤怠時間修正申請があります。", approval_changed_working_time_user_path(@user), remote: true, class: "font-red" %>
     </h5>
   <% else %>
-    <h5>【 勤怠時間修正申請のお知らせ 】</h5>
+    <h5>
+      【 勤怠時間修正申請のお知らせ 】
+    </h5>
   <% end %>
 <% end %>
 
+<!--各種ボタン-->
 <div class="btn-users-show">
   <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
   <%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-success" %>
@@ -71,7 +72,7 @@
   <%= link_to "勤怠修正ログ", changed_log_user_path(@user) , class: "btn btn-primary" %>
 </div>
 
-
+<!--勤怠表-->
 <div>
   <table class="table table-bordered table-condensed table-hover" id="table-attendances">
     <thead>
@@ -139,7 +140,35 @@
       <td rowspan="2"></td>
       <td rowspan="2"></td>
       <td rowspan="2"></td>
-      <td rowspan="2"></td>
+      <td rowspan="2">
+        <div><%= l(@first_day, format: :middle) %>の申請</div>
+        <% if @dates.month_confirm_status == 0 %>
+          <span class="label label-warning">つとむさんに申請中</span>
+        <% elsif @dates.month_confirm_status == 1 %>
+          <span class="label label-warning">きだくんに申請中</span>
+        <% elsif @dates.month_confirm_status == 3 %>
+          <span class="label label-danger">申請否認</span>
+        <% elsif @dates.month_confirm_status == 2 %>
+          <span class="label label-success">つとむさん承認済み</span>
+        <% elsif @dates.month_confirm_status == 4 %>
+          <span class="label label-success">きださん承認済み</span>
+        <% else %>
+          <div>
+            <%= form_with(model: @attendance, url: create_month_confirm_status_user_path(date: @first_day), local: true, method: :post) do |f| %>
+              <% if @user.id == 2 %>
+                <%= f.select :month_confirm_status, {"きださん": 1}, { include_blank: '選択'}, class: "form-control", required: true %>
+              <% elsif @user.id == 3 %>
+                <%= f.select :month_confirm_status, {"つとむ先輩": 0}, { include_blank: '選択'}, class: "form-control", required: true %>
+              <% else %>
+                <%= f.select :month_confirm_status, {"つとむ先輩": 0, "きださん": 1}, { include_blank: '選択'}, class: "form-control", required: true %>
+              <% end %>
+              <div class="center_btn">
+                <%= f.submit '申請', class: "btn btn-primary btn-#{yield(:class_text)}" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <td colspan="2"><%= @attendances.count %></td>
@@ -154,3 +183,4 @@
 <div id="create_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="approval_overtime" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="approval_changed_working_time" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="approval_month_confirm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

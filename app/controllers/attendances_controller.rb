@@ -10,6 +10,7 @@ class AttendancesController < ApplicationController
                   :approval_overtime_done,
                   :approval_changed_working_time,
                   :approval_changed_working_time_done,
+                  :create_month_confirm_status
                 ]
   before_action :logged_in_user, only: [:update, :edit_one_month, :overtime]
   before_action :admin_or_correct_user, only: [:update, :edit_one_month, :update_one_month]
@@ -38,6 +39,43 @@ class AttendancesController < ApplicationController
   end
   
   def edit_one_month
+  end
+
+  def create_month_confirm_status
+    @first_day = Date.parse(params[:date]) ? Date.parse(params[:date]) : Date.today.beginning_of_month
+    @dates = @user.attendances.find_by!(worked_on: @first_day)
+    @dates.update!(month_confirm_status: params[:month_confirm_status])
+    flash[:info] = "#{ l(@first_day, format: :middle) }の勤怠を申請しました。"
+    redirect_back(fallback_location: root_path)
+  end
+
+  def approval_month_confirm
+    if params[:id] == "2"
+      @users = User.joins(:attendances).where(attendances: { month_confirm_status: 0}).distinct
+      @attendances = Attendance.where(month_confirm_status: 0)
+    elsif params[:id] == "3"
+      @users = User.joins(:attendances).where(attendances: { month_confirm_status: 1}).distinct
+      @attendances = Attendance.where(month_confirm_status: 1)
+    end
+  end
+
+  def approval_month_confirm_done
+    ActiveRecord::Base.transaction do
+      month_confirm_status_params.each do |id, item|
+        if params[:attendances]["#{id}"][:id] == "1"
+          attendance = Attendance.find(id)
+          attendance.update_attributes!(item)
+          flash[:info] = "申請内容を返信しました。"
+        else
+          flash[:warning] = '申請の可否を返信できなかったものがあります。<br>変更欄にチェックを入れてください。'
+        end
+      end
+    end
+    redirect_back(fallback_location: root_path)
+
+  rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐
+    flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+    redirect_back(fallback_location: root_path)
   end
 
   def overtime
@@ -158,6 +196,10 @@ class AttendancesController < ApplicationController
 
   def attendances_month_status_params
     params.permit(attendances: [:month_status])[:attendances]
+  end
+
+  def month_confirm_status_params
+    params.permit(attendances: [:month_confirm_status])[:attendances]
   end
   
   # 管理権限者、または現在ログインしているユーザーを許可
